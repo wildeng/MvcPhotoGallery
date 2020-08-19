@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MvcPhotoGallery.Models
 {
@@ -12,7 +13,7 @@ namespace MvcPhotoGallery.Models
         [Required]
         public string Title { get; set; }
 
-        [Display(Name = "Creation Date")]
+        [BindNever]
         [DataType(DataType.Date)]
         public DateTime CreationDate { get; set; }
 

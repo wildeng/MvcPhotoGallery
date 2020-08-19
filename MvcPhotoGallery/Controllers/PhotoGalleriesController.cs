@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,10 @@ namespace MvcPhotoGallery.Controllers
                 return NotFound();
             }
 
+            photoGallery.Images = (ICollection<Image>)_context.Images
+                .Where(x => x.PhotoGalleryId == id)
+                .OrderByDescending(x => x.CreationDate).ToList();
+
             return View(photoGallery);
         }
 
@@ -54,8 +59,9 @@ namespace MvcPhotoGallery.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,CreationDate")] PhotoGallery photoGallery)
+        public async Task<IActionResult> Create([Bind("Id,Title")] PhotoGallery photoGallery)
         {
+            photoGallery.CreationDate = DateTime.Now;
             if (ModelState.IsValid)
             {
                 _context.Add(photoGallery);
@@ -78,6 +84,7 @@ namespace MvcPhotoGallery.Controllers
             {
                 return NotFound();
             }
+            ViewBag.galleryId = photoGallery.Id;
             return View(photoGallery);
         }
 
@@ -86,7 +93,7 @@ namespace MvcPhotoGallery.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,CreationDate")] PhotoGallery photoGallery)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] PhotoGallery photoGallery)
         {
             if (id != photoGallery.Id)
             {
@@ -143,6 +150,12 @@ namespace MvcPhotoGallery.Controllers
             _context.PhotoGalleries.Remove(photoGallery);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // return image modal
+        public IActionResult GetImageModal()
+        {
+            return PartialView("_UploadImage");
         }
 
         private bool PhotoGalleryExists(int id)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MvcPhotoGallery.Models
 {
@@ -17,10 +18,19 @@ namespace MvcPhotoGallery.Models
 
         [StringLength(255)]
         [Required]
-        public string Cdn_path { get; set; }
+        public string ImagePath { get; set; }
 
-        [Display(Name = "Creation Date")]
+        [StringLength(255)]
+        [Required]
+        public string ThumbnailPath { get; set; }
+
+        [BindNever]
         [DataType(DataType.Date)]
         public DateTime CreationDate { get; set; }
+
+        public Image()
+        {
+            CreationDate = DateTime.Now;
+        }
     }
 }

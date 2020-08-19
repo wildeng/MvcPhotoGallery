@@ -23,6 +23,15 @@
             @Html.DisplayFor(model => model.CreationDate)
         </dd>
     </dl>
+    <div class="links">
+        @foreach (var image in Model.Images)
+        {
+            <a href="@image.ImagePath" title="@image.Title" data-gallery>
+                <img src="@image.ThumbnailPath" alt="@image.Title"/>
+            </a>
+        }
+    </div>
+    
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

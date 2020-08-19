@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="GalleryImages\" />
+    <Folder Include="GalleryImages\Thumbs\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
@@ -15,5 +18,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Views\Images\_UploadImage.cshtml" />
   </ItemGroup>
 </Project>

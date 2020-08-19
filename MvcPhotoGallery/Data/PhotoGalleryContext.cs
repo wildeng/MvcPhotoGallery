@@ -13,6 +13,5 @@ namespace MvcPhotoGallery.Data
 
         public DbSet<PhotoGallery> PhotoGalleries { get; set; }
         public DbSet<Image> Images { get; set; }
-        public DbSet<Thumbnail> Thumbnails { get; set; }
     }
 }
