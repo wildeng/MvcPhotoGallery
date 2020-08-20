@@ -48,12 +48,11 @@ namespace MvcPhotoGallery.Controllers
         }
 
         // GET: Images/Create
-        public PartialViewResult Create(int? PhotogalleryId)
+        public ActionResult Create(int? PhotogalleryId)
         {
             var image = new Models.Image();
             image.PhotoGalleryId = (int)PhotogalleryId;
-            System.Threading.Thread.Sleep(2000);
-            return PartialView("_UploadImage");
+            return PartialView("_UploadImage", image);
         }
 
         // POST: Images/Create

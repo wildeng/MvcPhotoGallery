@@ -2,3 +2,10 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+$('#upload-image').on('click', function () {
+  var url = $(this).data('url');
+  $.get(url).done(function(data) {
+    $('.modal-content').html(data);
+    $('#modal-container').modal('show');
+  });
+});

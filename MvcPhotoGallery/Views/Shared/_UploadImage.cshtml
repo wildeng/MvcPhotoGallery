@@ -17,7 +17,7 @@
         </div>
         <div class="col-sm-4">
             <input type="file" id="files" name="files" />
-            <input type="hidden" value="@ViewBag.parentId" asp-for="PhotoGalleryId"/>
+            @Html.HiddenFor(model => model.PhotoGalleryId)
         </div>
         <div class="col-sm-2">
             <button type="button" class="btn btn-primary" id="upload_image" name="upload_image">Upload</button>

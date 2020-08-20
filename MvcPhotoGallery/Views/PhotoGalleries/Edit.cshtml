@@ -22,7 +22,7 @@
         </form>
     </div>
     <!-- Button trigger modal -->
-    <a data-toggle="modal" href="@Url.Action("Create", "Images", new { PhotogalleryId = @ViewBag.parentId })" data-target="#myModal">Add image</a>
+    <button type="button" id="upload-image" class="btn btn-primary" data-url="@Url.Action("Create", "Images", new { PhotogalleryId = @ViewBag.galleryId })" data-target="#modal-container" data-toggle="modal">Add Image</button>
 </div>
 
 <div>
@@ -30,7 +30,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-container" name="modal-container" tabindex="-1" role="dialog" aria-labelledby="insert-image" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         </div>
