@@ -23,15 +23,32 @@
             @Html.DisplayFor(model => model.CreationDate)
         </dd>
     </dl>
-    <div class="links">
-        @foreach (var image in Model.Images)
+
+    <div class="row">
+     
+        @foreach (var image in Model.Images.Content)
         {
-            <a href="@image.ImagePath" title="@image.Title" data-gallery>
-                <img src="@image.ThumbnailPath" alt="@image.Title"/>
-            </a>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="@Url.Content(image.ImagePath)" title="@image.Title" data-gallery>
+                        <img src="@Url.Content(image.ThumbnailPath)" alt="@image.Title" />
+                        <div class="caption">@image.Title</div>
+                    </a>
+                </div>
+            </div>
+         }
+
+        @{
+          var prevDisabled = Model.Images.HasPreviousPage ? "" : "disabled";
+          var nextDisabled = Model.Images.HasNextPage ? "" : "disabled";
         }
     </div>
-    
+    <div class="row">
+        <a asp-action="Details" asp-route-page="@(Model.Images.CurrentPage - 1)" class="btn btn-defaul @prevDisabled">Previous</a>
+        <a asp-action="Details" asp-route-page="@(Model.Images.CurrentPage + 1)" class="btn btn-default @nextDisabled">Next</a>
+    </div>
+
+      
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

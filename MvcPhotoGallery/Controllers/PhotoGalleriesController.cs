@@ -23,11 +23,12 @@ namespace MvcPhotoGallery.Controllers
         // GET: PhotoGalleries
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PhotoGalleries.ToListAsync());
+                  
+          return View(await _context.PhotoGalleries.ToListAsync());
         }
 
         // GET: PhotoGalleries/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, int page = 1, int pageSize = 20)
         {
             if (id == null)
             {
@@ -41,11 +42,29 @@ namespace MvcPhotoGallery.Controllers
                 return NotFound();
             }
 
-            photoGallery.Images = (ICollection<Image>)_context.Images
-                .Where(x => x.PhotoGalleryId == id)
-                .OrderByDescending(x => x.CreationDate).ToList();
 
-            return View(photoGallery);
+          photoGallery.Images.Content = _context.Images
+            .Where(x => x.PhotoGalleryId == id)
+            .OrderByDescending(x => x.CreationDate)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        photoGallery.Images.TotalRecords = _context.Images
+          .Where(x => x.PhotoGalleryId == id).Count();
+
+        photoGallery.Images.CurrentPage = page;
+        photoGallery.Images.PageSize = pageSize;
+
+      if (page > 1)
+            photoGallery.Images.HasPreviousPage = true;
+
+      if (page * pageSize < photoGallery.Images.TotalRecords )
+        photoGallery.Images.HasNextPage = true;
+
+
+
+      return View(photoGallery);
         }
 
         // GET: PhotoGalleries/Create

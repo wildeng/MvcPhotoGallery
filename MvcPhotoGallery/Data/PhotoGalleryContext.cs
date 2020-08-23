@@ -13,5 +13,10 @@ namespace MvcPhotoGallery.Data
 
         public DbSet<PhotoGallery> PhotoGalleries { get; set; }
         public DbSet<Image> Images { get; set; }
-    }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+          modelBuilder.Entity<Models.PagedList<Image>>().HasNoKey();
+        }
+  }
 }

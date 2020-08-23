@@ -1,6 +1,6 @@
 ﻿$('#upload_image').on('click', function () {
-  var fileUpload = $("#Files").get(0);
-  var parentId = 
+  var fileUpload = $("#files").get(0);
+  var parentId = $("#PhotoGalleryId").val();
   var files = fileUpload.files;
 
   var fileData = new FormData();

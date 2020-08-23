@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,10 +19,12 @@ namespace MvcPhotoGallery.Controllers
     public class ImagesController : Controller
     {
         private readonly PhotoGalleryContext _context;
+        private IWebHostEnvironment Environment;
 
-        public ImagesController(PhotoGalleryContext context)
+        public ImagesController(PhotoGalleryContext context, IWebHostEnvironment _environment)
         {
             _context = context;
+            Environment = _environment;
         }
 
         // GET: Images
@@ -52,6 +56,7 @@ namespace MvcPhotoGallery.Controllers
         {
             var image = new Models.Image();
             image.PhotoGalleryId = (int)PhotogalleryId;
+            image.CreationDate = DateTime.Now;
             return PartialView("_UploadImage", image);
         }
 
@@ -94,13 +99,13 @@ namespace MvcPhotoGallery.Controllers
     // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult UploadImage(Models.Image image, IFormFileCollection files)
+    public async Task<ActionResult> UploadImage(Models.Image image, IFormFileCollection files)
     {
-      if (!ModelState.IsValid)
-        return View(image);
+    
       if (files.Count() == 0 || files.FirstOrDefault() == null)
       {
-        return View(image);
+        ModelState.AddModelError(string.Empty, "You need  to upload file");
+        return PartialView("_UploadImage", image);
       }
 
       var model = new Models.Image();
@@ -109,25 +114,35 @@ namespace MvcPhotoGallery.Controllers
         if (file.Length == 0) { continue; }
 
         model.Title = image.Title;
+        model.PhotoGalleryId = image.PhotoGalleryId;
         var fileName = Guid.NewGuid().ToString();
         var extension = System.IO.Path.GetExtension(file.FileName).ToLower();
 
         using (var img = SixLabors.ImageSharp.Image.Load(file.OpenReadStream()))
         {
-          model.ThumbnailPath = String.Format("/GalleryImages/Thumbs/{0}{1}", fileName, extension);
-          model.ImagePath = String.Format("/GalleryImages/{0}{1}", fileName, extension);
+          string name = String.Format("{0}{1}", fileName, extension).ToString();
+          model.ThumbnailPath = Path.Combine("/GalleryImages/Thumbs/", name);
+          model.ImagePath = Path.Combine("/GalleryImages/", name);
 
           System.Drawing.Size imageSize = new System.Drawing.Size(img.Width, img.Height);
           System.Drawing.Size thumbSize = NewSize(imageSize, new System.Drawing.Size(100,100));
 
-          var thumb = img;
-          thumb.Mutate(x => x.Resize(thumbSize.Width, thumbSize.Height));
-          thumb.Save(model.ThumbnailPath);
-          img.Save(model.ImagePath);
+         
+          if(!ModelState.IsValid)
+            return PartialView("_UploadImage", model);
+          _context.Add(model);
+          await _context.SaveChangesAsync();
+          string wwwpath = this.Environment.WebRootPath.ToString();
+          var thumbPath = String.Concat(wwwpath, model.ThumbnailPath.ToString());
+          var imagePath = String.Concat(wwwpath, model.ImagePath.ToString());
+          img.Save(imagePath);
+          img.Mutate(x => x.Resize(thumbSize.Width, thumbSize.Height));
+          img.Save(thumbPath);
+         
         }
         
       }
-      return RedirectPermanent("/Photogalleries/Edit/1");
+      return PartialView("_UploadImage", model);
     }
 
     // POST: Images/Edit/5

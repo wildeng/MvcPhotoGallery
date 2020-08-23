@@ -16,12 +16,8 @@ namespace MvcPhotoGallery.Models
         [Required]
         public string Title { get; set; }
 
-        [StringLength(255)]
-        [Required]
         public string ImagePath { get; set; }
 
-        [StringLength(255)]
-        [Required]
         public string ThumbnailPath { get; set; }
 
         [BindNever]

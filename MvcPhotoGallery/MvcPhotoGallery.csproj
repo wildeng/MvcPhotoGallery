@@ -7,8 +7,8 @@
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="GalleryImages\" />
-    <Folder Include="GalleryImages\Thumbs\" />
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\GalleryImages\Thumbs\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />

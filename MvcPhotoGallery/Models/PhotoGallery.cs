@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MvcPhotoGallery.Models
 {
-    public class PhotoGallery
+  public class PhotoGallery
     {
         public int Id { get; set; }
 
@@ -17,7 +18,7 @@ namespace MvcPhotoGallery.Models
         [DataType(DataType.Date)]
         public DateTime CreationDate { get; set; }
 
-        public virtual ICollection<Image> Images { get; set; }
-
-    }
+    [NotMapped]
+    public virtual PagedList<Image> Images { get; set; } = new PagedList<Image>();
+  }
 }
