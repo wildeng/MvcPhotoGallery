@@ -1,2 +1,3 @@
 /wwwroot/GalleryImages/Thumbs/*.*
-/wwwroot?GalleryImages/*.*
+/wwwroot/GalleryImages/*.*
+!/wwwroot/GalleryImages/Thumbs
