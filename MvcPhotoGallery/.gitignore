@@ -1,3 +1,4 @@
-/wwwroot/GalleryImages/Thumbs/*.*
-/wwwroot/GalleryImages/*.*
-!/wwwroot/GalleryImages/Thumbs
+wwwroot/GalleryImages/*
+!wwwroot/GalleryImages/Thumbs
+wwwroot/GalleryImages/Thumbs/*
+
