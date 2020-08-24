@@ -29,5 +29,24 @@ Global
 		$3.scope = text/x-csharp
 		$0.CSharpFormattingPolicy = $4
 		$4.scope = text/x-csharp
+		$0.TextStylePolicy = $5
+		$5.inheritsSet = null
+		$5.scope = text/x-cshtml-web
+		$0.HTMLFormattingPolicy = $6
+		$6.inheritsSet = null
+		$6.scope = text/x-cshtml-web
+		$0.TextStylePolicy = $7
+		$7.inheritsSet = null
+		$7.scope = text/x-html
+		$0.HTMLFormattingPolicy = $8
+		$8.FormatOnPaste = True
+		$8.XHTMLCodingStyle = True
+		$8.scope = text/x-html
+		$0.TextStylePolicy = $9
+		$9.inheritsSet = null
+		$9.scope = text/x-web
+		$0.TextStylePolicy = $10
+		$10.inheritsSet = null
+		$10.scope = text/x-vs
 	EndGlobalSection
 EndGlobal

@@ -22,5 +22,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Images\_UploadImage.cshtml" />
+    <Content Remove="Views\Shared\_Modal.cshtml" />
   </ItemGroup>
 </Project>
