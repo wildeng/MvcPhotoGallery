@@ -69,6 +69,33 @@ namespace MvcPhotoGallery.Controllers
       return View(photoGallery);
     }
 
+
+    // GET: PhotoGalleries/ImagesDetails/5
+    public async Task<IActionResult> ImagesDetails(int? id)
+    {
+      if (id == null)
+      {
+        return NotFound();
+      }
+
+      var photoGallery = await _context.PhotoGalleries
+          .FirstOrDefaultAsync(m => m.Id == id);
+      if (photoGallery == null)
+      {
+        return NotFound();
+      }
+
+
+      List<Models.Image> imageList = _context.Images
+        .Where(x => x.PhotoGalleryId == id)
+        .OrderByDescending(x => x.CreationDate)
+        .ToList();
+
+
+      return PartialView("_ImageCarousel", imageList);
+
+    }
+
     // GET: PhotoGalleries/Create
     public IActionResult Create()
     {

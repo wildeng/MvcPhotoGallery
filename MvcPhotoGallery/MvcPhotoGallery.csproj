@@ -23,5 +23,6 @@
   <ItemGroup>
     <Content Remove="Views\Images\_UploadImage.cshtml" />
     <Content Remove="Views\Shared\_Modal.cshtml" />
+    <Content Remove="Views\Shared\_ImageCarousel.cshtml" />
   </ItemGroup>
 </Project>

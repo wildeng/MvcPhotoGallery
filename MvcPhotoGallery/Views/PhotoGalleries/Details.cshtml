@@ -28,7 +28,8 @@
         {
 <div class="col-md-4">
     <div class="thumbnail">
-        <a href="@Url.Content(image.ImagePath)" title="@image.Title" data-gallery>
+        <a class="toggle-gallery" data-url="@Url.Action("ImagesDetails", "PhotoGalleries", new { id = @ViewBag.galleryId })"
+           data-target="#modal-container" data-toggle="modal" href="#">
             <img src="@Url.Content(image.ThumbnailPath)" alt="@image.Title" />
             <div class="caption">@image.Title</div>
         </a>
@@ -47,10 +48,10 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a> | 
+    <a asp-action="Index">Back to List</a> |
     <!-- Button trigger modal -->
     <a id="upload-image" data-url="@Url.Action("Create", "Images", new { PhotogalleryId = @ViewBag.galleryId })"
-       data-target="#modal-container" data-toggle="modal">
+       data-target="#modal-container" data-toggle="modal" href="#">
         Add Image
     </a>
 </div>
